@@ -1,5 +1,3 @@
-//const conn = require('../../config/db.js');
-
 // Create and Save a new Note
 exports.create = (req, res) => {
 
@@ -18,11 +16,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single note with a noteId
-exports.findOne = (req, res) => {
-    if(req.params.userid === ''){
-       return console.error("Required parameter is missing "); 
-    }
-    
+exports.findOne = (req, res) => { 
     let sql = `SELECT * FROM CBT_sessions WHERE sesid = ? `;
     conn.query(sql, [req.params.sesid], (error, results, fields) => {
         if (error) {

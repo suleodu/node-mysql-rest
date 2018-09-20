@@ -1,9 +1,11 @@
+var session_validation = require('../validations/session.validation');
+const session = require('../controllers/session.controller.js');
+
+
 module.exports = (app) => {
     
-    const session = require('../controllers/session.controller.js');
-
     // Create a new User
-    app.post('/session', session.create);
+    app.post('/session', validation(session_validation.createSession), session.create);
 
     // Retrieve all Users
     app.get('/session', session.findAll);

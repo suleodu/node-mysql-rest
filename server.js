@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+global.validation = require('express-validation');
 const Cors = require("cors");
 
 
@@ -19,6 +20,8 @@ global.conn = require('./config/db.js');
 
 
 
+
+
 // define a simple route
 app.get('/', (req, res) => {
     res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
@@ -30,9 +33,17 @@ require('./app/routes/user.route.js')(app);
 //Require Notes routes
 require('./app/routes/session.route.js')(app);
 
-//
-//// Require Notes routes
-//require('./app/routes/session.routes.js')(app);
+app.use((err, req, res, next) => {
+  if (err instanceof validation.ValidationError) {
+    res.status(err.status).json(err);
+  } else {
+    res.status(500)
+      .json({
+        status: err.status,
+        message: err.message
+      });
+  }
+});
 
 // listen for requests
 app.listen(3001, () => {

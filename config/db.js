@@ -17,3 +17,6 @@ connection.connect((err) => {
 });
 
 module.exports = connection;
+
+
+global.CURRENT_TIMESTAMP = { toSqlString: () => { return 'CURRENT_TIMESTAMP()'; } };

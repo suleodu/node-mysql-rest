@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+global.moment = require('moment');
 global.validation = require('express-validation');
+// Configuring the database
+global.conn = require('./config/db.js');
 const Cors = require("cors");
 
 
@@ -14,13 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
-
-// Configuring the database
-global.conn = require('./config/db.js');
-
-
-
-
 
 // define a simple route
 app.get('/', (req, res) => {

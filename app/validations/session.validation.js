@@ -21,6 +21,9 @@ module.exports = {
 
   // PUT /api/tasks/:taskId
   updateSession: {
+    params: {
+      sesid: Joi.number().required()
+    },
     body: {
       sesname: Joi.string(),
       passmark: Joi.number(),

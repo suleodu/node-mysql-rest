@@ -11,11 +11,11 @@ module.exports = (app) => {
     app.get('/session', session.findAll);
 
     // Retrieve a single User with sessionId
-    app.get('/session/:sessionid', session.findOne);
+    app.get('/session/:sesid',validation(session_validation.getSession), session.findOne);
 
     // Update a User with sessionId
-    app.put('/session/:sessionid', session.update);
+    app.put('/session/:sesid', validation(session_validation.updateSession),session.update);
 
     // Delete a User with sessionId
-    app.delete('/session/:sessionid', session.delete);
+    app.delete('/session/:sesid', validation(session_validation.getSession),  session.delete);
 }

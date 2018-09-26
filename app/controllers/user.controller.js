@@ -2,8 +2,30 @@
 
 // Create and Save a new Note
 exports.create = (req, res) => {
-
-
+    let post = req.body;
+    let sql = conn.format(`INSERT INTO CBT_users 
+                            (userid, fname, lname, mname, email, password, progid, status, access, is_login, created_at, updated_at ) 
+                            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+                            [   post.userid, 
+                                post.fname, 
+                                post.lname,
+                                post.mname,
+                                post.email,
+                                post.password,
+                                post.progid || 1,
+                                post.status,
+                                post.access,
+                                post.is_login || 'false',
+                                CURRENT_TIMESTAMP, 
+                                CURRENT_TIMESTAMP
+                            ]
+                        );
+    conn.query(sql, (error, results, fields) => {
+        if(error){
+            res.status(404).json(error.message);
+        }
+        res.json(results);
+    });
 };
 
 // Retrieve and return all notes from the database.
@@ -19,9 +41,7 @@ exports.findAll = (req, res) => {
 
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
-    if(req.params.userid === ''){
-       return console.error("Required parameter is missing "); 
-    }
+   
     
     let sql = `SELECT * FROM CBT_users WHERE userid = ? `;
     conn.query(sql, [req.params.userid], (error, results, fields) => {

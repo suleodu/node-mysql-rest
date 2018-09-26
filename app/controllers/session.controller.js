@@ -22,12 +22,12 @@ exports.create = (req, res) => {
 
 // Retrieve and return all notes from the database.
 exports.findAll = (req, res) => {
-    let sql = `SELECT * FROM CBT_sessions `;
+    let sql = `SELECT * FROM CBT_sessions  ORDER BY sesid DESC`;
     conn.query(sql, (error, results, fields) => {
         if (error) {
             res.status(404).json(error.message);
         }
-        res.json(results);
+        res.json({payload: results});
     });
 };
 
